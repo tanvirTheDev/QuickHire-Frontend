@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
-import { Epilogue, Inter } from "next/font/google";
+import { Epilogue, Red_Hat_Display } from "next/font/google";
 import "./globals.css";
 import { ReduxProvider } from "@/store/provider";
+import ToastProvider from "@/components/ui/ToastProvider";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 const epilogue = Epilogue({
   variable: "--font-epilogue",
   subsets: ["latin"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const redHatDisplay = Red_Hat_Display({
+  variable: "--font-red-hat",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "QuickHire",
+  title: "QuickHire | Find Your Dream Job",
   description: "QuickHire frontend application",
 };
 
@@ -24,9 +27,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${epilogue.variable} ${inter.variable} antialiased`}>
-        <ReduxProvider>{children}</ReduxProvider>
+    <html lang="en" className={`${epilogue.variable} ${redHatDisplay.variable}`}>
+      <body className="min-h-screen antialiased">
+        <ReduxProvider>
+          <ToastProvider>
+            <div className="flex min-h-screen flex-col">
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+          </ToastProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

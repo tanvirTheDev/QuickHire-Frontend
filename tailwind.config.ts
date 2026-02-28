@@ -34,7 +34,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-epilogue)", "Epilogue", "sans-serif"],
-        display: ["Clash Display", "var(--font-epilogue)", "sans-serif"],
+        display: ["var(--font-red-hat)", "Red Hat Display", "sans-serif"],
         inter: ["var(--font-inter)", "Inter", "sans-serif"],
       },
       borderRadius: {

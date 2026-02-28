@@ -8,12 +8,28 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: #4640de;
+  --color-primary-tertiary: #e9ebfd;
+  --color-primary-secondary: #ccccf5;
+  --color-text-primary: #25324b;
+  --color-text-secondary: #515b6f;
+  --color-text-muted: #7c8493;
+  --color-text-subtle: #a8adb7;
+  --color-text-dark: #202430;
+  --color-border: #d6ddeb;
+  --color-accent-green: #56cdad;
+  --color-accent-blue: #26a4ff;
+  --color-accent-yellow: #ffb836;
+  --color-accent-red: #ff6550;
+  --color-accent-purple: #7b61ff;
   --font-sans: var(--font-epilogue);
-  --font-display: "Clash Display";
+  --font-display: var(--font-red-hat);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-epilogue), "Epilogue", sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
