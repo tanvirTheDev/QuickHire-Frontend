@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #25324b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-epilogue);
+  --font-display: "Clash Display";
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-epilogue), "Epilogue", sans-serif;
+}
