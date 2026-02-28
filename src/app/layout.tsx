@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Epilogue, Inter } from "next/font/google";
 import "./globals.css";
-import StoreProvider from "@/store/provider";
+import { ReduxProvider } from "@/store/provider";
 
 const epilogue = Epilogue({
   variable: "--font-epilogue",
@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${epilogue.variable} ${inter.variable} antialiased`}>
-        <StoreProvider>{children}</StoreProvider>
+        <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
   );
