@@ -1,37 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QuickHire Frontend
 
-## Getting Started
+QuickHire frontend is a responsive job portal UI built with Next.js 14 (App Router), TypeScript, Tailwind CSS, Framer Motion, and Redux Toolkit (RTK Query).
 
-First, run the development server:
+## Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Next.js 14 (App Router)
+- React 18 + TypeScript
+- Tailwind CSS 4
+- Framer Motion
+- Redux Toolkit + RTK Query
+- Lucide React icons
+- clsx + tailwind-merge
+
+## Features
+
+- Pixel-focused homepage sections (Hero, Companies, Categories, Featured jobs, Latest jobs, CTA)
+- Job listings page with:
+  - Search
+  - Filter (category, type, location)
+  - Pagination
+- Job details page with apply form:
+  - Name
+  - Email
+  - Resume URL
+  - Cover note
+  - Client-side Zod validation
+- Admin panel:
+  - Create job
+  - Delete job
+  - View all applications
+  - Candidate details modal
+- Global toast notifications and loading/empty states
+
+## Project Structure
+
+```text
+quickhire-frontend/
+├── public/                     # Static assets (logo, hero, section graphics)
+├── src/
+│   ├── app/                    # App Router pages/layout
+│   │   ├── page.tsx            # Home
+│   │   ├── jobs/page.tsx       # Job listings
+│   │   ├── jobs/[id]/page.tsx  # Job details
+│   │   ├── admin/page.tsx      # Admin panel
+│   │   ├── layout.tsx
+│   │   └── globals.css
+│   ├── components/
+│   │   ├── home/               # Home sections
+│   │   ├── jobs/               # Job-related UI
+│   │   ├── admin/              # Admin components
+│   │   ├── application/        # Application management UI
+│   │   ├── layout/             # Navbar/Footer/Page wrapper
+│   │   └── ui/                 # Reusable UI components
+│   ├── store/
+│   │   ├── api/
+│   │   │   ├── baseApi.ts
+│   │   │   ├── jobsApi.ts
+│   │   │   └── applicationsApi.ts
+│   │   ├── index.ts
+│   │   └── provider.tsx
+│   ├── hooks/
+│   ├── lib/
+│   ├── constants/
+│   └── types/
+├── package.json
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Routes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `/` - Home
+- `/jobs` - Job listings
+- `/jobs/[id]` - Job details + apply form
+- `/admin` - Basic admin dashboard
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment Variables
 
-## Learn More
+Create `.env.local` in `quickhire-frontend`:
 
-To learn more about Next.js, take a look at the following resources:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Production API example:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```env
+NEXT_PUBLIC_API_URL=https://quickhire-backend-p7c8.onrender.com/api
+```
 
-## Deploy on Vercel
+## Installation & Run
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# from quickhire-frontend/
+npm install
+npm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# QuickHire-Frontend
+Open: `http://localhost:3000`
+
+## Available Scripts
+
+```bash
+npm run dev    # next dev (watchpack polling enabled)
+npm run build  # production build
+npm run start  # start built app
+npm run lint   # run eslint
+```
+
+## API Integration Notes
+
+- All API calls use RTK Query from `src/store/api`.
+- Base URL comes from `NEXT_PUBLIC_API_URL`.
+- `jobsApi.ts` handles:
+  - list jobs
+  - featured jobs
+  - job by id
+  - create/update/delete job
+- `applicationsApi.ts` handles:
+  - submit application
+  - list applications
+  - application by id
+  - applications by job id
+
+## Design System / Fonts
+
+Current typography setup follows Figma mapping:
+
+- Clash Display (heading/display usage)
+- Epilogue (body/UI text)
+- Red Hat Display (logo wordmark)
+
+## Notes
+
+- The frontend expects the backend response envelope:
+  - `success`, `statusCode`, `message`, `data`, optional `meta`
+- For local full-stack development, run backend and frontend together:
+  - Backend: `http://localhost:5000`
+  - Frontend: `http://localhost:3000`
