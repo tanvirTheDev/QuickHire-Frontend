@@ -15,13 +15,21 @@ export interface Job {
 
 export interface Application {
   _id: string;
-  jobId: string;
+  jobId:
+    | string
+    | {
+        _id: string;
+        title: string;
+        company: string;
+        location: string;
+      };
   name: string;
   email: string;
   resumeLink: string;
   coverNote?: string;
   status: "pending" | "reviewed" | "rejected";
   createdAt: string;
+  updatedAt?: string;
 }
 
 export interface ApiResponse<T> {

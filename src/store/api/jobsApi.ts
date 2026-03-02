@@ -1,4 +1,3 @@
-import { baseApi } from "./baseApi";
 import type {
   ApiResponse,
   CreateJobPayload,
@@ -6,6 +5,7 @@ import type {
   JobFilters,
   PaginationMeta,
 } from "@/types";
+import { baseApi } from "./baseApi";
 
 interface JobsResponse {
   jobs: Job[];
@@ -40,14 +40,42 @@ export const jobsApi = baseApi.injectEndpoints({
       providesTags: (result) =>
         result?.data.jobs
           ? [
-              ...result.data.jobs.map(({ _id }) => ({ type: "Job" as const, id: _id })),
+              ...result.data.jobs.map(({ _id }) => ({
+                type: "Job" as const,
+                id: _id,
+              })),
               { type: "Job" as const, id: "LIST" },
             ]
           : [{ type: "Job" as const, id: "LIST" }],
     }),
 
+    getFeaturedJobs: builder.query<{ data: Job[] }, { limit?: number } | void>({
+      query: (params) => {
+        const searchParams = new URLSearchParams();
+        if (params?.limit) searchParams.set("limit", String(params.limit));
+        const queryString = searchParams.toString();
+        return { url: `/jobs/featured${queryString ? `?${queryString}` : ""}` };
+      },
+      transformResponse: (response: ApiResponse<Job[]>) => ({
+        data: response.data,
+      }),
+      providesTags: (result) =>
+        result?.data
+          ? [
+              ...result.data.map(({ _id }) => ({
+                type: "Job" as const,
+                id: _id,
+              })),
+              { type: "Job" as const, id: "FEATURED" },
+            ]
+          : [{ type: "Job" as const, id: "FEATURED" }],
+    }),
+
     getJobById: builder.query<{ data: Job }, string>({
-      query: (id) => `/jobs/${id}`,
+      query: (_id) => `/jobs/${_id}`,
+      transformResponse: (response: ApiResponse<Job>) => ({
+        data: response.data,
+      }),
       providesTags: (_result, _error, id) => [{ type: "Job", id }],
     }),
 
@@ -93,6 +121,7 @@ export const jobsApi = baseApi.injectEndpoints({
 
 export const {
   useGetJobsQuery,
+  useGetFeaturedJobsQuery,
   useGetJobByIdQuery,
   useCreateJobMutation,
   useUpdateJobMutation,
