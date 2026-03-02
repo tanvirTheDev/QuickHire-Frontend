@@ -1,17 +1,19 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
 
-const navLinks = [
-  { label: "Find Jobs", href: "/" },
+const leftNavLinks = [
+  { label: "Find Jobs", href: "/jobs" },
   { label: "Browse Companies", href: "#" },
-  { label: "Admin", href: "/admin" },
 ];
+
+const rightNavLinks = [{ label: "Admin", href: "/admin" }];
 
 const mobileContainerVariants = {
   closed: { height: 0, opacity: 0 },
@@ -53,22 +55,33 @@ export default function Navbar() {
         "sticky top-0 z-40 border-b border-transparent transition-all duration-200",
         isScrolled
           ? "border-border bg-white/80 shadow-sm backdrop-blur-md"
-          : "bg-white"
+          : "bg-white",
       )}
     >
       <div className="mx-auto flex h-[78px] w-full max-w-[1240px] items-center justify-between px-4 md:px-6">
-        <Link href="/" className="flex items-center gap-2.5">
-          <span className="relative block h-8 w-8 rounded-[4px] bg-primary">
-            <span className="absolute left-1/2 top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" />
-          </span>
-          <span className="font-display text-[30px] font-bold leading-9 tracking-[-0.01em] text-text-primary min-[430px]:text-[34px] md:text-2xl">
-            QuickHire
-          </span>
-        </Link>
+        <div className="flex items-center gap-8 lg:gap-10">
+          <Link href="/" className="flex items-center gap-2.5">
+            <Image
+              src="/logo.jpg"
+              alt="QuickHire logo"
+              width={36}
+              height={36}
+              className="h-9 w-9 rounded-full object-cover"
+              priority
+            />
+            <span
+              className="text-[30px] font-bold leading-9 tracking-[-0.01em] text-text-primary min-[430px]:text-[34px] md:text-2xl"
+              style={{
+                fontFamily:
+                  "var(--font-red-hat), 'Red Hat Display', sans-serif",
+              }}
+            >
+              QuickHire
+            </span>
+          </Link>
 
-        <div className="hidden items-center gap-10 md:flex">
-          <nav className="flex items-center gap-8 lg:gap-10">
-            {navLinks.map((link) => {
+          <nav className="hidden items-center gap-8 md:flex lg:gap-10">
+            {leftNavLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
@@ -76,7 +89,9 @@ export default function Navbar() {
                   href={link.href}
                   className={cn(
                     "text-base font-medium transition-colors duration-150",
-                    isActive ? "text-primary" : "text-text-secondary hover:text-text-primary"
+                    isActive
+                      ? "text-primary"
+                      : "text-text-secondary hover:text-text-primary",
                   )}
                 >
                   {link.label}
@@ -84,15 +99,32 @@ export default function Navbar() {
               );
             })}
           </nav>
+        </div>
 
-          <div className="flex items-center gap-5 border-l border-border pl-6">
-            <button className="text-base font-semibold text-primary transition-colors hover:text-[#3F38CA]">
-              Login
-            </button>
-            <button className="h-12 min-w-[113px] rounded-sm bg-primary px-6 text-base font-bold text-white transition-colors hover:bg-[#3F38CA]">
-              Sign Up
-            </button>
-          </div>
+        <div className="hidden items-center gap-5 border-l border-border pl-6 md:flex">
+          {rightNavLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "text-base font-medium transition-colors duration-150",
+                  isActive
+                    ? "text-primary"
+                    : "text-text-secondary hover:text-text-primary",
+                )}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+          <button className="text-base font-semibold text-primary transition-colors hover:text-[#3F38CA]">
+            Login
+          </button>
+          <button className="h-12 min-w-[113px] rounded-sm bg-primary px-6 text-base font-bold text-white transition-colors hover:bg-[#3F38CA]">
+            Sign Up
+          </button>
         </div>
 
         <button
@@ -101,7 +133,11 @@ export default function Navbar() {
           onClick={() => setIsMenuOpen((prev) => !prev)}
           aria-label="Toggle menu"
         >
-          {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          {isMenuOpen ? (
+            <X className="h-5 w-5" />
+          ) : (
+            <Menu className="h-5 w-5" />
+          )}
         </button>
       </div>
 
@@ -116,7 +152,7 @@ export default function Navbar() {
             className="overflow-hidden border-t border-border bg-white md:hidden"
           >
             <div className="space-y-2 px-4 py-3">
-              {navLinks.map((link) => {
+              {[...leftNavLinks, ...rightNavLinks].map((link) => {
                 const isActive = pathname === link.href;
                 return (
                   <motion.div key={link.href} variants={mobileItemVariants}>
@@ -126,7 +162,7 @@ export default function Navbar() {
                         "block rounded-sm px-2 py-2 text-base font-medium transition-colors duration-150",
                         isActive
                           ? "bg-primary-tertiary text-primary"
-                          : "text-text-secondary hover:bg-background-muted hover:text-text-primary"
+                          : "text-text-secondary hover:bg-background-muted hover:text-text-primary",
                       )}
                     >
                       {link.label}

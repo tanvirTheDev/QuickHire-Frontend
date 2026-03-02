@@ -1,19 +1,16 @@
 "use client";
 
 import { PageWrapper } from "@/components/layout/PageWrapper";
-import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
-import Select from "@/components/ui/Select";
 import { motion } from "framer-motion";
-import { MapPin, Search } from "lucide-react";
+import { ChevronDown, MapPin, Search } from "lucide-react";
 import Image from "next/image";
 
 export default function HeroSection() {
   return (
     <PageWrapper>
-      <section className="relative overflow-hidden bg-background-muted">
+      <section className="relative overflow-hidden bg-background-muted lg:h-[794px]">
         <div className="mx-auto grid min-h-[760px] w-full max-w-[1240px] grid-cols-1 items-center gap-8 px-5 py-7 sm:px-6 sm:py-10 lg:grid-cols-[629px_1fr] lg:gap-0">
-          <motion.div className="relative z-10 pt-3 sm:pt-6 lg:pt-0">
+          <motion.div className="relative z-30 pt-3 sm:pt-6 lg:pt-0">
             <motion.h1
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -60,32 +57,39 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, ease: "easeOut", delay: 0.34 }}
-              className="mt-8 rounded-sm bg-white p-2 shadow-[0px_2.7135651111602783px_4.396662712097168px_0px_rgba(192,192,192,0.03),0px_6.862810134887695px_11.119489669799805px_0px_rgba(192,192,192,0.04),0px_13.999488830566406px_22.682716369628906px_0px_rgba(192,192,192,0.05)]"
-              whileHover={{ y: -2 }}
+              className="relative z-30 mt-8 flex h-auto w-full items-center justify-start bg-white p-4 md:h-[89px] md:w-[852px] md:max-w-[852px] md:p-4 shadow-[0px_79px_128px_rgba(192,192,192,0.09),0px_28.8363px_46.7221px_rgba(192,192,192,0.0598508),0px_13.9995px_22.6827px_rgba(192,192,192,0.0475723),0px_6.86281px_11.1195px_rgba(192,192,192,0.0380675),0px_2.71357px_4.39666px_rgba(192,192,192,0.0270615)]"
             >
-              <div className="grid grid-cols-1 items-center gap-1 md:grid-cols-[1fr_1px_1fr_auto] md:gap-0">
-                <Input
-                  placeholder="Job title or keyword"
-                  leftIcon={<Search className="h-5 w-5" />}
-                  className="h-[56px] rounded-none border-0 border-b border-border bg-transparent px-3 shadow-none focus:border-b focus:border-border focus:ring-0 md:border-b-0"
-                />
-
-                <div className="hidden h-8 w-px bg-border md:block" />
-
+              <div className="grid w-full grid-cols-1 items-center md:grid-cols-[1.4fr_1px_1fr_172px]">
                 <div className="relative">
-                  <MapPin className="pointer-events-none absolute left-3 top-1/2 z-10 h-5 w-5 -translate-y-1/2 text-text-muted" />
-                  <Select
-                    defaultValue="florence-italy"
-                    options={[
-                      { value: "florence-italy", label: "Florence, Italy" },
-                    ]}
-                    className="h-[56px] rounded-none border-0 border-b border-border bg-transparent pl-10 shadow-none focus:border-b focus:border-border focus:ring-0 md:border-b-0"
+                  <Search className="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-text-secondary" />
+                  <input
+                    type="text"
+                    placeholder="Job title or keyword"
+                    aria-label="Job title or keyword"
+                    className="h-[57px] w-full border-0 border-b border-border bg-transparent pl-14 pr-4 text-base font-medium text-text-primary placeholder:font-normal placeholder:text-text-muted/65 focus:outline-none md:border-b-0"
                   />
                 </div>
 
-                <Button size="lg" className="h-[56px] w-full px-9 md:w-auto">
+                <div className="hidden h-[57px] w-px bg-border md:block" />
+
+                <div className="relative">
+                  <MapPin className="pointer-events-none absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-text-secondary" />
+                  <select
+                    aria-label="Location"
+                    defaultValue="florence-italy"
+                    className="h-[57px] w-full appearance-none border-0 border-b border-border bg-transparent pl-14 pr-10 text-base font-medium text-text-primary focus:outline-none md:border-b-0"
+                  >
+                    <option value="florence-italy">Florence, Italy</option>
+                  </select>
+                  <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-text-secondary" />
+                </div>
+
+                <button
+                  type="button"
+                  className="h-[57px] w-full bg-primary px-5 text-base font-semibold text-white transition-colors hover:bg-[#3F38CA]"
+                >
                   Search my job
-                </Button>
+                </button>
               </div>
             </motion.div>
 
@@ -99,50 +103,31 @@ export default function HeroSection() {
             </motion.p>
           </motion.div>
 
-          <div className="relative hidden h-[794px] overflow-visible lg:block">
-            <motion.div
-              initial={{ opacity: 0, x: 60 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
-              className="absolute inset-0"
-            >
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{
-                  duration: 7,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                <Image
-                  src="/hero-pattern.svg"
-                  alt="Hero pattern"
-                  width={1124}
-                  height={1186}
-                  className="absolute -right-44 -top-48 h-auto w-[920px] max-w-none opacity-70"
-                  priority
-                />
-              </motion.div>
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{
-                  duration: 5.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                <Image
-                  src="/hero-pic.png"
-                  alt="Hero model"
-                  width={714}
-                  height={1037}
-                  className="absolute right-[-30px] top-[19%] h-auto w-[620px] max-w-none drop-shadow-[0_22px_45px_rgba(37,50,75,0.25)]"
-                  priority
-                />
-              </motion.div>
-            </motion.div>
-          </div>
+          <div className="hidden h-[794px] lg:block" />
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+          className="pointer-events-none absolute left-[calc(50%+92px)] top-[100px] z-10 hidden h-[707px] w-[501px] overflow-hidden lg:block"
+        >
+          <Image
+            src="/hero-pattern.svg"
+            alt=""
+            aria-hidden
+            width={1124}
+            height={1186}
+            className="absolute -left-[280px] -top-[88px] z-0 h-auto w-[900px] max-w-none"
+          />
+          <Image
+            src="/hero-pic.png"
+            alt="Hero model"
+            fill
+            className="z-10 object-cover object-top [clip-path:polygon(0_0,100%_0,100%_84%,0_100%)]"
+            priority
+          />
+        </motion.div>
       </section>
     </PageWrapper>
   );

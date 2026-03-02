@@ -1,6 +1,13 @@
+import Image from "next/image";
 import Link from "next/link";
 
-const aboutLinks = ["Companies", "Pricing", "Terms", "Advice", "Privacy Policy"];
+const aboutLinks = [
+  "Companies",
+  "Pricing",
+  "Terms",
+  "Advice",
+  "Privacy Policy",
+];
 const resourceLinks = ["Help Docs", "Guide", "Updates", "Contact Us"];
 
 export default function Footer() {
@@ -10,10 +17,14 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-3">
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
-              <span className="relative block h-8 w-8 rounded-[4px] bg-primary">
-                <span className="absolute left-1/2 top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" />
-              </span>
-              <span className="font-[var(--font-red-hat)] text-2xl font-bold leading-9 tracking-[-0.01em] text-white">
+              <Image
+                src="/logo.jpg"
+                alt="QuickHire logo"
+                width={36}
+                height={36}
+                className="h-9 w-9 rounded-full object-cover"
+              />
+              <span className="font-(--font-red-hat) text-2xl leading-9 tracking-[-0.01em] text-white">
                 QuickHire
               </span>
             </div>
@@ -41,7 +52,9 @@ export default function Footer() {
             </div>
 
             <div>
-              <h4 className="mb-4 text-lg font-semibold text-white">Resources</h4>
+              <h4 className="mb-4 text-lg font-semibold text-white">
+                Resources
+              </h4>
               <ul className="space-y-2.5">
                 {resourceLinks.map((item) => (
                   <li key={item}>
@@ -58,19 +71,21 @@ export default function Footer() {
           </div>
 
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-white">Get job notifications</h4>
+            <h4 className="text-lg font-semibold text-white">
+              Get job notifications
+            </h4>
             <p className="text-base text-border">
               The latest job news, articles, sent to your inbox weekly.
             </p>
-            <form className="flex flex-col gap-2 sm:flex-row">
+            <form className="flex w-full flex-col gap-2 lg:flex-row lg:items-stretch">
               <input
                 type="email"
                 placeholder="Email Address"
-                className="h-11 flex-1 rounded-sm border border-border bg-white px-3 text-text-primary placeholder:text-text-subtle focus:outline-none focus:ring-2 focus:ring-primary/25"
+                className="h-[50px] min-h-[50px] w-full min-w-0 flex-1 rounded-sm border border-border bg-white px-3 py-0 text-text-primary placeholder:text-text-subtle focus:outline-none focus:ring-2 focus:ring-primary/25 sm:h-12 sm:min-h-12"
               />
               <button
                 type="button"
-                className="h-11 rounded-sm bg-primary px-6 text-base font-bold text-white transition-colors hover:bg-[#3F38CA]"
+                className="h-[50px] min-h-[50px] w-full rounded-sm bg-primary px-6 py-0 text-base font-bold text-white transition-colors hover:bg-[#3F38CA] sm:h-12 sm:min-h-12 lg:w-auto"
               >
                 Subscribe
               </button>

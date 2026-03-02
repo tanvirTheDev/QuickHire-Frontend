@@ -15,19 +15,22 @@ export default function JobList() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [type, setType] = useState("");
+  const [location, setLocation] = useState("");
   const [page, setPage] = useState(1);
 
   const debouncedSearch = useDebounce(search, 350);
+  const debouncedLocation = useDebounce(location, 350);
 
   const query = useMemo(
     () => ({
       search: debouncedSearch || undefined,
       category: category || undefined,
       type: type || undefined,
+      location: debouncedLocation || undefined,
       page,
       limit: 8,
     }),
-    [debouncedSearch, category, type, page]
+    [debouncedSearch, category, type, debouncedLocation, page]
   );
 
   const { data, isLoading, isFetching, isError } = useGetJobsQuery(query);
@@ -49,12 +52,17 @@ export default function JobList() {
             <JobFilters
               category={category}
               type={type}
+              location={location}
               onCategoryChange={(value) => {
                 setCategory(value);
                 setPage(1);
               }}
               onTypeChange={(value) => {
                 setType(value);
+                setPage(1);
+              }}
+              onLocationChange={(value) => {
+                setLocation(value);
                 setPage(1);
               }}
             />

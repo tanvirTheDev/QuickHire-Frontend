@@ -1,7 +1,8 @@
 "use client";
 
-import type { Job } from "@/types";
 import { cn } from "@/lib/utils";
+import type { Job } from "@/types";
+import Link from "next/link";
 
 type JobCardProps = {
   job: Job;
@@ -27,7 +28,11 @@ const clampDescription = (description: string) => {
   return `${description.slice(0, 72).trimEnd()}...`;
 };
 
+const isMongoObjectId = (value: string) => /^[a-fA-F0-9]{24}$/.test(value);
+
 export default function JobCard({ job }: JobCardProps) {
+  const canViewDetails = isMongoObjectId(job._id);
+
   return (
     <article className="flex h-full flex-col gap-4 border border-border bg-white p-6">
       <div className="flex items-center justify-between gap-4">
@@ -57,11 +62,19 @@ export default function JobCard({ job }: JobCardProps) {
         <span
           className={cn(
             "inline-flex items-center rounded-full px-4 py-1 text-sm font-semibold leading-[1.6]",
-            categoryStyles[job.category] || "bg-[#E9EBFD] text-primary"
+            categoryStyles[job.category] || "bg-[#E9EBFD] text-primary",
           )}
         >
           {job.category}
         </span>
+        {canViewDetails ? (
+          <Link
+            href={`/jobs/${job._id}`}
+            className="inline-flex items-center rounded-full border border-primary px-4 py-1 text-sm font-semibold leading-[1.6] text-primary transition-colors hover:bg-primary hover:text-white"
+          >
+            View details
+          </Link>
+        ) : null}
       </div>
     </article>
   );
